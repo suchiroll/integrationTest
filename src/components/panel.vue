@@ -1,17 +1,15 @@
 <template>
   <div class="wrapper">
-   <div class = "panel" v-for="(item, index) in info.content" >
-      <div class = "imagediv" ><img class = "image" v-bind:src = "info.content[index].main_image_url+'?w=400&h=270'"> </div>
+   <div class = "panel" v-for="(item, index) in info.content" > <!-- iterate through items in content arr -->
+      <div class = "imagediv" ><img class = "image" v-bind:src = "info.content[index].main_image_url+'?w=400&h=270'"> </div> <!-- gets image url -->
 
-      <div class = "title"><p> <a v-bind:href = "info.content[index].original_url"> {{info.content[index].title}} </a> </p> </div>
+      <div class = "title"><p> <a v-bind:href = "info.content[index].original_url"> {{info.content[index].title}} </a> </p> </div> <!-- gets link and title url -->
     </div>
   </div>
 </template>
 
 <script>
-import JQuery from 'jquery';
-let $ = JQuery;
-import axios from 'axios';
+//require
 var jsonp = require('jsonp');
 
 export default {
@@ -19,28 +17,24 @@ export default {
  
   data(){
     return{
-      info: []
+      info: [] //to store info 
     }
   },
  
   created() {
-    console.log("createed");
+    //set data
     this.info = this.dataResult();
     }, 
 
     methods: {
+      //loading jsonp data from url to info 
       dataResult(){
-      /*  $.getJSON('https://api.idio.co/1.0/content/.json?key=URN4QXKCG3QD3Y5MS51A&callback=', function(el){
-            console.log("hkk");
-            this.info = el;
-        }.bind(this));*/
-
         jsonp('https://api.idio.co/1.0/content/.json?key=URN4QXKCG3QD3Y5MS51A&callback=', null, function(err,data){
             if(err){
               console.error(err.message);
             } else {
               this.info = data;
-              console.log(this.info);
+              console.log(this.info); //just checking 
             }
         }.bind(this));
       },
